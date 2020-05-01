@@ -9,24 +9,20 @@ const isValid = (input) => {
             "unix": date.getTime()
         });
     } else if (input.length <= 16 && input.match(regexM)) {
-        input = +input;
-        let date = new Date(input);
+      console.log(input);
+        let num = input.replace(/"/g, '');
+      console.log(num);
+     num = +num;
+        let date = new Date(num);
+      console.log(date);
         return JSON.stringify({
             "utc": date.toUTCString(),
-            "unix": input
+            "unix": num
         });
 
     } else {
         return '"error": "Invalid Date"';
     }
-}
+  }
 
-const checkTime = (input) => {
-    return "The input was: " + input;
-}
-
-
-console.log(isValid('1987-02-06'));
-console.log(isValid('539568000000'))
-console.log(isValid('12233334444465465656565656'))
-console.log(isValid('absdcdkdkdk'))
+module.exports = isValid;
