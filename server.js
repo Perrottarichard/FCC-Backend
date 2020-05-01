@@ -4,7 +4,6 @@
 // init project
 var express = require('express');
 var app = express();
-var isValid = require('./time.js');
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -25,17 +24,14 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-//timestamp API endpoint
-
-app.get("/api/timestamp/:date_string?", function(req, res) {
-  if(req.params.date_string === '""' || req.params.date_string === undefined){
-    let time = new Date().getTime();
-    let string = new Date(time).toUTCString();
-    res.json({unix: time, utc: string })  
+app.get("/api/whoami", function(req, res) {
+  let info = {
+    ipaddress: req.connection.remoteAddress,
+    language: req.header('Accept-Language'),
+    software: req.header('User-Agent')
   }
-  else
-  res.json(isValid(req.params.date_string))
-});
+  res.json(info);
+})
 
 
 // listen for requests :)
