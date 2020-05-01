@@ -28,13 +28,13 @@ app.get("/api/hello", function (req, res) {
 //timestamp API endpoint
 
 app.get("/api/timestamp/:date_string?", function(req, res) {
-  if(req.params.date_string === '""'){
+  if(req.params.date_string === '""' || req.params.date_string === undefined){
     let time = new Date().getTime();
     let string = new Date(time).toUTCString();
-    res.send({"utc": string, "unix": time})  
+    res.json({unix: time, utc: string })  
   }
   else
-  res.send(isValid(req.params.date_string))
+  res.json(isValid(req.params.date_string))
 });
 
 
